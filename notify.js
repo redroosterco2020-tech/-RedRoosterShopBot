@@ -1,5 +1,5 @@
-const db = require('../db');
-const { MENU } = require('../keyboards');
+const db = require('./db');
+const { MENU } = require('./keyboards');
 
 function register(bot) {
   bot.hears(MENU.NOTIFY, ctx => {
@@ -24,10 +24,6 @@ function register(bot) {
   });
 }
 
-/**
- * وقتی موجودی یک محصول از صفر به عدد مثبت تغییر کند، این تابع باید فراخوانی شود
- * تا به همه‌ی مشترکینِ آن محصول پیام «دوباره موجود شد» ارسال شود.
- */
 async function notifyRestock(bot, product) {
   const subscribers = db.popSubscribers(product.id);
   for (const chatId of subscribers) {
