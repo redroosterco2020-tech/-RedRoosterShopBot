@@ -1,11 +1,10 @@
 {
   "name": "silo-sales-bot",
   "version": "1.0.0",
-  "description": "ربات فروش تلگرامی سیلو — نمایش محصولات، ثبت و پیگیری سفارش، اطلاع‌رسانی موجودی و پشتیبانی",
-  "main": "src/bot.js",
+  "description": "ربات فروش تلگرامی سیلو",
+  "main": "bot.js",
   "scripts": {
-    "start": "node src/bot.js",
-    "dev": "node --watch src/bot.js"
+    "start": "node bot.js"
   },
   "license": "UNLICENSED",
   "dependencies": {
