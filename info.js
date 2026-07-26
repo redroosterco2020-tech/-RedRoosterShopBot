@@ -1,5 +1,5 @@
-const db = require('../db');
-const { MENU, infoSubmenuKeyboard } = require('../keyboards');
+const db = require('./db');
+const { MENU, infoSubmenuKeyboard } = require('./keyboards');
 
 function register(bot) {
   bot.hears(MENU.INFO, ctx => {
