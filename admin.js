@@ -18,6 +18,7 @@ function register(bot) {
       '🛠 دستورات مدیریتی:\n\n' +
       '/products — لیست محصولات به‌همراه شناسه و موجودی\n' +
       '/setstock <شناسه> <تعداد> — تغییر موجودی محصول\n' +
+      '/setprice <شناسه> <قیمت> — تغییر قیمت محصول (به تومان)\n' +
       '/orders — لیست سفارش‌های در انتظار\n' +
       '/setstatus <کد سفارش> <status> — تغییر وضعیت سفارش\n' +
       `   status یکی از: ${Object.keys(STATUS_LABELS).join(' | ')}\n` +
@@ -30,6 +31,20 @@ function register(bot) {
     const products = db.getProducts();
     const lines = products.map(p => `${p.id} — ${p.name} — موجودی: ${p.stock} — ${formatPrice(p.price)}`);
     ctx.reply('📋 محصولات:\n\n' + lines.join('\n'));
+  });
+
+  bot.command('setprice', ctx => {
+    if (!requireAdmin(ctx)) return;
+    const parts = ctx.message.text.split(' ').filter(Boolean);
+    const [, id, priceStr] = parts;
+    const price = parseInt(priceStr, 10);
+    if (!id || !Number.isInteger(price) || price < 0) {
+      return ctx.reply('فرمت درست: /setprice <شناسه محصول> <قیمت به تومان>\nمثال: /setprice rooster 400000');
+    }
+    const product = db.getProductById(id);
+    if (!product) return ctx.reply('محصولی با این شناسه یافت نشد. از /products استفاده کنید.');
+    db.updateProduct(id, { price });
+    ctx.reply(`✅ قیمت «${product.name}» به ${formatPrice(price)} به‌روزرسانی شد.`);
   });
 
   bot.command('setstock', async ctx => {
