@@ -1,7 +1,7 @@
-const db = require('../db');
-const { MENU } = require('../keyboards');
-const { formatPrice, stockLine } = require('../utils/format');
-const { todayJalaliDisplay } = require('../utils/jalali');
+const db = require('./db');
+const { MENU } = require('./keyboards');
+const { formatPrice, stockLine } = require('./format');
+const { todayJalaliDisplay } = require('./jalali');
 
 function register(bot) {
   bot.hears(MENU.PRICE_TODAY, ctx => {
