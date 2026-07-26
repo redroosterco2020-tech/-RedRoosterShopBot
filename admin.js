@@ -29,6 +29,12 @@ function register(bot) {
       '/addproduct — افزودن محصول جدید (به‌صورت گام‌به‌گام)\n' +
       '/setstock <شناسه> <تعداد> — تغییر موجودی محصول\n' +
       '/setprice <شناسه> <قیمت> — تغییر قیمت محصول (به تومان)\n' +
+      '/setsocial <whatsapp|telegram|instagram> <لینک> — تغییر لینک شبکه اجتماعی\n' +
+      '/setabout <متن> — تغییر متن «درباره ما»\n' +
+      '/setrules <متن> — تغییر متن «قوانین»\n' +
+      '/sethours <متن> — تغییر متن «ساعات کاری»\n' +
+      '/setlocationtext <متن> — تغییر متن آدرس\n' +
+      '/setlocationmap <لینک> — تغییر لینک نقشه\n' +
       '/orders — لیست سفارش‌های در انتظار\n' +
       '/setstatus <کد سفارش> <status> — تغییر وضعیت سفارش\n' +
       `   status یکی از: ${Object.keys(STATUS_LABELS).join(' | ')}\n` +
@@ -83,6 +89,77 @@ function register(bot) {
     await ctx.answerCbQuery();
     ctx.session.newProduct = null;
     ctx.reply('❌ افزودن محصول لغو شد.');
+  });
+
+  bot.command('setabout', ctx => {
+    if (!requireAdmin(ctx)) return;
+    const text = ctx.message.text.replace(/^\/setabout\s*/, '').trim();
+    if (!text) return ctx.reply('فرمت درست: /setabout <متن>\nمثال: /setabout سیلو، تأمین‌کننده مستقیم تخم‌مرغ و جوجه محلی است.');
+    const settings = db.getSettings();
+    settings.about = text;
+    db.saveSettings(settings);
+    ctx.reply('✅ متن «درباره ما» به‌روزرسانی شد.');
+  });
+
+  bot.command('setrules', ctx => {
+    if (!requireAdmin(ctx)) return;
+    const text = ctx.message.text.replace(/^\/setrules\s*/, '').trim();
+    if (!text) return ctx.reply('فرمت درست: /setrules <متن>');
+    const settings = db.getSettings();
+    settings.rules = text;
+    db.saveSettings(settings);
+    ctx.reply('✅ متن «قوانین» به‌روزرسانی شد.');
+  });
+
+  bot.command('sethours', ctx => {
+    if (!requireAdmin(ctx)) return;
+    const text = ctx.message.text.replace(/^\/sethours\s*/, '').trim();
+    if (!text) return ctx.reply('فرمت درست: /sethours <متن>\nمثال: /sethours شنبه تا چهارشنبه ۸ تا ۲۰');
+    const settings = db.getSettings();
+    settings.workingHours = text;
+    db.saveSettings(settings);
+    ctx.reply('✅ متن «ساعات کاری» به‌روزرسانی شد.');
+  });
+
+  bot.command('setlocationtext', ctx => {
+    if (!requireAdmin(ctx)) return;
+    const text = ctx.message.text.replace(/^\/setlocationtext\s*/, '').trim();
+    if (!text) return ctx.reply('فرمت درست: /setlocationtext <متن آدرس>');
+    const settings = db.getSettings();
+    settings.locationText = text;
+    db.saveSettings(settings);
+    ctx.reply('✅ متن آدرس به‌روزرسانی شد.');
+  });
+
+  bot.command('setlocationmap', ctx => {
+    if (!requireAdmin(ctx)) return;
+    const parts = ctx.message.text.split(' ').filter(Boolean);
+    const link = parts[1];
+    if (!link) return ctx.reply('فرمت درست: /setlocationmap <لینک گوگل مپ>\nمثال: /setlocationmap https://maps.google.com/?q=35.6892,51.3890');
+    const settings = db.getSettings();
+    settings.locationMapUrl = link;
+    db.saveSettings(settings);
+    ctx.reply('✅ لینک نقشه به‌روزرسانی شد.');
+  });
+
+  bot.command('setsocial', ctx => {
+    if (!requireAdmin(ctx)) return;
+    const parts = ctx.message.text.split(' ').filter(Boolean);
+    const [, platform, link] = parts;
+    const validPlatforms = ['whatsapp', 'telegram', 'instagram'];
+    if (!platform || !validPlatforms.includes(platform) || !link) {
+      return ctx.reply(
+        'فرمت درست: /setsocial <whatsapp|telegram|instagram> <لینک>\n' +
+        'مثال: /setsocial whatsapp https://wa.me/989123456789\n' +
+        'مثال: /setsocial telegram https://t.me/your_channel'
+      );
+    }
+    const settings = db.getSettings();
+    if (!settings.social) settings.social = {};
+    const key = platform === 'telegram' ? 'telegramChannel' : platform;
+    settings.social[key] = link;
+    db.saveSettings(settings);
+    ctx.reply(`✅ لینک ${platform === 'telegram' ? 'کانال تلگرام' : platform} به‌روزرسانی شد.`);
   });
 
   bot.command('setprice', ctx => {
@@ -168,6 +245,7 @@ async function updateOrderStatusAndNotify(ctx, code, status) {
   ).catch(() => {});
 }
 
+// این تابع در روتر متنیِ مرکزی (bot.js) فراخوانی می‌شود؛ اگر true برگرداند یعنی پیام مصرف شده است.
 async function handleAddProductText(ctx, text) {
   const draft = ctx.session.newProduct;
   if (!draft) return false;
