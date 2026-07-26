@@ -1,0 +1,90 @@
+[
+  {
+    "id": "egg_local",
+    "name": "تخم‌مرغ محلی",
+    "category": "eggs",
+    "categoryLabel": "🥚 تخم‌مرغ و تخم نطفه‌دار",
+    "unit": "شانه (۳۰ عددی)",
+    "price": 185000,
+    "stock": 40,
+    "isNew": false,
+    "desc": "تخم‌مرغ تازه‌ی محلی، جمع‌آوری روزانه."
+  },
+  {
+    "id": "egg_fertile",
+    "name": "تخم نطفه‌دار",
+    "category": "eggs",
+    "categoryLabel": "🥚 تخم‌مرغ و تخم نطفه‌دار",
+    "unit": "عدد",
+    "price": 25000,
+    "stock": 120,
+    "isNew": false,
+    "desc": "تخم نطفه‌دار مناسب جوجه‌کشی، از مرغ‌های مولد سالم."
+  },
+  {
+    "id": "chick_1day",
+    "name": "جوجه یک‌روزه",
+    "category": "chicks",
+    "categoryLabel": "🐣 جوجه",
+    "unit": "قطعه",
+    "price": 45000,
+    "stock": 200,
+    "isNew": true,
+    "desc": "جوجه یک‌روزه سالم و واکسینه‌شده."
+  },
+  {
+    "id": "chick_1month",
+    "name": "جوجه یک‌ماهه",
+    "category": "chicks",
+    "categoryLabel": "🐣 جوجه",
+    "unit": "قطعه",
+    "price": 95000,
+    "stock": 60,
+    "isNew": false,
+    "desc": "جوجه یک‌ماهه، آماده‌ی نگهداری در محیط باز."
+  },
+  {
+    "id": "nimche",
+    "name": "نیمچه",
+    "category": "young",
+    "categoryLabel": "🐤 نیمچه و پولت",
+    "unit": "قطعه",
+    "price": 160000,
+    "stock": 0,
+    "isNew": false,
+    "desc": "نیمچه‌ی چند هفته‌ای، رشد یافته و سالم."
+  },
+  {
+    "id": "pullet",
+    "name": "پولت",
+    "category": "young",
+    "categoryLabel": "🐤 نیمچه و پولت",
+    "unit": "قطعه",
+    "price": 220000,
+    "stock": 25,
+    "isNew": false,
+    "desc": "پولت آماده‌ی شروع تخم‌گذاری."
+  },
+  {
+    "id": "laying_hen",
+    "name": "مرغ تخم‌گذار",
+    "category": "adult",
+    "categoryLabel": "🐔 مرغ و خروس",
+    "unit": "قطعه",
+    "price": 320000,
+    "stock": 18,
+    "isNew": false,
+    "desc": "مرغ تخم‌گذار بالغ و سالم."
+  },
+  {
+    "id": "rooster",
+    "name": "خروس",
+    "category": "adult",
+    "categoryLabel": "🐔 مرغ و خروس",
+    "unit": "قطعه",
+    "price": 380000,
+    "stock": 0,
+    "isNew": false,
+    "desc": "خروس محلی بالغ."
+  }
+]
