@@ -13,16 +13,16 @@ bot.use((ctx, next) => {
   return next();
 });
 
-const mainMenu = require('./handlers/mainMenu');
-const shop = require('./handlers/shop');
-const products = require('./handlers/products');
-const priceToday = require('./handlers/priceToday');
-const order = require('./handlers/order');
-const tracking = require('./handlers/tracking');
-const notify = require('./handlers/notify');
-const support = require('./handlers/support');
-const info = require('./handlers/info');
-const admin = require('./handlers/admin');
+const mainMenu = require('./mainMenu');
+const shop = require('./shop');
+const products = require('./products');
+const priceToday = require('./priceToday');
+const order = require('./order');
+const tracking = require('./tracking');
+const notify = require('./notify');
+const support = require('./support');
+const info = require('./info');
+const admin = require('./admin');
 
 mainMenu.register(bot);
 shop.register(bot);
@@ -40,7 +40,6 @@ bot.on('text', async (ctx, next) => {
   const text = ctx.message.text;
   if (text.startsWith('/')) return next();
 
-  // در حال تکمیل فرم سفارش
   const consumedByOrder = await order.handleOrderText(ctx, text);
   if (consumedByOrder) return;
 
@@ -61,7 +60,6 @@ bot.on('text', async (ctx, next) => {
   return next();
 });
 
-// عکس ارسالی در حالت پشتیبانی هم فوروارد شود
 bot.on('photo', async (ctx, next) => {
   if (ctx.session?.awaiting === 'support') {
     ctx.session.awaiting = null;
