@@ -1,9 +1,9 @@
-const db = require('../db');
-const config = require('../config');
-const { MENU, productListKeyboard, orderConfirmKeyboard, adminOrderKeyboard, mainMenuKeyboard } = require('../keyboards');
-const { formatPrice } = require('../utils/format');
-const { generateOrderCode } = require('../utils/orderCode');
-const { todayJalaliDisplay } = require('../utils/jalali');
+const db = require('./db');
+const config = require('./config');
+const { MENU, productListKeyboard, orderConfirmKeyboard, adminOrderKeyboard, mainMenuKeyboard } = require('./keyboards');
+const { formatPrice } = require('./format');
+const { generateOrderCode } = require('./orderCode');
+const { todayJalaliDisplay } = require('./jalali');
 
 function startOrderFor(ctx, productId) {
   const product = db.getProductById(productId);
@@ -73,7 +73,6 @@ function register(bot) {
       mainMenuKeyboard()
     );
 
-    // اطلاع به مدیر/مدیران
     const adminMsg =
       `🆕 سفارش جدید — ${code}\n` +
       `👤 ${order.username} (id: ${order.userId})\n` +
@@ -94,7 +93,6 @@ function register(bot) {
   });
 }
 
-// این تابع در روتر متنیِ مرکزی (bot.js) فراخوانی می‌شود؛ اگر true برگرداند یعنی پیام مصرف شده است.
 async function handleOrderText(ctx, text) {
   const draft = ctx.session.order;
   if (!draft) return false;
