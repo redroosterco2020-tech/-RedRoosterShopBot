@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = __dirname;
 
 function filePath(name) {
   return path.join(DATA_DIR, name);
@@ -21,7 +21,6 @@ function writeJSON(name, data) {
   fs.writeFileSync(filePath(name), JSON.stringify(data, null, 2), 'utf8');
 }
 
-/* ---------- products ---------- */
 function getProducts() {
   return readJSON('products.json', []);
 }
@@ -40,7 +39,6 @@ function updateProduct(id, patch) {
   return list[idx];
 }
 
-/* ---------- orders ---------- */
 function getOrders() {
   return readJSON('orders.json', []);
 }
@@ -66,7 +64,6 @@ function updateOrderStatus(code, status) {
   return list[idx];
 }
 
-/* ---------- restock subscribers ---------- */
 function getSubscribers() {
   return readJSON('subscribers.json', {});
 }
@@ -87,7 +84,6 @@ function popSubscribers(productId) {
   return list;
 }
 
-/* ---------- support message map (forwarded msg id -> original user) ---------- */
 function getSupportMap() {
   return readJSON('support.json', {});
 }
@@ -104,7 +100,6 @@ function resolveSupportMessage(forwardedMessageId) {
   return map[forwardedMessageId] || null;
 }
 
-/* ---------- settings (static info + working hours + social) ---------- */
 function getSettings() {
   return readJSON('settings.json', {});
 }
