@@ -35,13 +35,15 @@ support.register(bot);
 info.register(bot);
 admin.register(bot);
 
-// روتر مرکزی پیام‌های متنی: بسته به وضعیت هر کاربر، پیام را به بخش مربوطه می‌فرستد
 bot.on('text', async (ctx, next) => {
   const text = ctx.message.text;
   if (text.startsWith('/')) return next();
 
   const consumedByOrder = await order.handleOrderText(ctx, text);
   if (consumedByOrder) return;
+
+  const consumedByAddProduct = await admin.handleAddProductText(ctx, text);
+  if (consumedByAddProduct) return;
 
   const awaiting = ctx.session.awaiting;
   if (awaiting === 'search') {
