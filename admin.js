@@ -1,6 +1,6 @@
-const db = require('../db');
-const config = require('../config');
-const { formatPrice, statusLabel, STATUS_LABELS } = require('../utils/format');
+const db = require('./db');
+const config = require('./config');
+const { formatPrice, statusLabel, STATUS_LABELS } = require('./format');
 const { notifyRestock } = require('./notify');
 
 function requireAdmin(ctx) {
